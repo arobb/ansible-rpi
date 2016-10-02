@@ -1,0 +1,20 @@
+---
+- name: 'Install Charlotte temp dependencies'
+  apt:
+    name: git
+    state: latest
+    update_cache: yes
+
+- name: 'Install bc'
+  apt:
+    name: bc
+    state: latest
+    update_cache: yes
+
+- name: 'Download Charlotte project'
+  git: repo=https://github.com/arobb/charlotte.git dest=/home/pi/git/charlotte
+
+- name: 'Start temperature reporting'
+  shell:
+    chdir: '/home/pi/git/charlotte'
+    executable: '$PWD/bin/temp_daemon.py start'

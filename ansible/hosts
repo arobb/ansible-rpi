@@ -1,0 +1,11 @@
+[dhcp]
+rpi-network[00:01].local
+
+
+[bramble:children]
+dhcp
+
+
+[bramble:vars]
+ansible_user=pi
+deploy_target=pi
