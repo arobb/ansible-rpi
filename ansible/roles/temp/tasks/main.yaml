@@ -14,7 +14,7 @@
 - name: 'Download Charlotte project'
   git: repo=https://github.com/arobb/charlotte.git dest=/home/pi/git/charlotte
 
-- name: 'Start temperature reporting'
+- name: 'Install and start temperature reporting'
   shell:
     chdir: '/home/pi/git/charlotte'
-    executable: '$PWD/bin/temp_daemon.py start'
+    executable: 'install/install_service_temperature.sh'
