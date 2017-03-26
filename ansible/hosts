@@ -1,11 +1,32 @@
+[all:children]
+dhcp
+admin
+openvpn
+power
+
+
+[admin]
+rpi-admin00.local
+
+
+[openvpn]
+rpi-openvpn00.local
+
+
 [dhcp]
 rpi-network[00:01].local
 
 
+[power]
+rpi-power[00:01].local
+
+
 [bramble:children]
 dhcp
+admin
+openvpn
 
 
-[bramble:vars]
+[all:vars]
 ansible_user=pi
 deploy_target=pi
