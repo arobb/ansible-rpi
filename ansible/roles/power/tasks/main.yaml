@@ -1,0 +1,20 @@
+---
+- name: Download APC utility
+  unarchive:
+    src: http://downloads.sourceforge.net/project/apcupsd/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz
+    remote_src: yes
+    dest: /tmp
+
+- name: Configure the APC utility
+  command: ./configure --enable-usb
+    chdir: /tmp/apcupsd-3.14.14
+
+- name: Build the APC utility
+  make:
+    chdir: /tmp/apcupsd-3.14.14
+
+- name: Install the API utility
+  make:
+    chdir: /tmp/apcupsd-3.14.14
+    target: install
+  become: yes
