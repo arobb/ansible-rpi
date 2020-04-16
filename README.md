@@ -8,3 +8,11 @@ Deploy using ansible (install instructions for ansible are in requirements below
 ```
 ansible-playbook -e 'host_key_checking=False' playbook.yaml -i hosts
 ```
+
+## Testing against a Docker-hosted instance
+https://github.com/arobb/sensor-pod
+Follow README directions for "Generic access to Raspbian environment"
+
+```
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook new-pi-playbook.yaml -i hosts-qa
+```
