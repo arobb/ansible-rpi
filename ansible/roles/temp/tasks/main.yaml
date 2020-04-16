@@ -1,13 +1,7 @@
 ---
 - name: 'Install Charlotte temp dependencies'
   apt:
-    name: git
-    state: latest
-    update_cache: yes
-
-- name: 'Install bc'
-  apt:
-    name: bc
+    name: ['git', 'bc']
     state: latest
     update_cache: yes
 
@@ -17,4 +11,4 @@
 - name: 'Install and start temperature reporting'
   shell:
     chdir: '/home/pi/git/charlotte'
-    executable: 'install/install_service_temperature.sh'
+    cmd: 'install/install_service_temperature.sh'
