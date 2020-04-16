@@ -1,0 +1,8 @@
+---
+- name: 'Copy profile scripts'
+  copy:
+    src: "{{ playbook_dir }}/{{ item }}"
+    dest: /etc/profile.d
+    mode: 0755
+  with_items:
+    ['content/aliases.sh']
