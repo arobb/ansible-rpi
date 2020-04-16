@@ -1,0 +1,25 @@
+---
+# Install specific Java version (avoid accidental install of newer Java)
+- name: Recommended dependencies
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    ['ca-certficates', 'apt-transport-https', 'openjdk-8-jdk']
+
+- name: Add the Ubiquiti Apt GPG key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 06E85760C0A52C50
+
+- name: Add the Ubiquiti Apt Repo
+  apt_repository:
+    repo: deb https://www.ui.com/downloads/unifi/debian stable ubiquiti
+    state: present
+    filename: 100-ubnt-unifi
+
+- name: Install Unifi Software
+  apt:
+    name: unifi
+    state: latest
