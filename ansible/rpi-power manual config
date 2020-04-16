@@ -1,0 +1,26 @@
+passwd
+mkdir ~/.ssh
+nano ~/.ssh/authorized_keys
+
+sudo raspi-config
+
+curl -OL http://downloads.sourceforge.net/project/apcupsd/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz
+tar xzf apcupsd-3.14.14.tar.gz && cd apcupsd-3.14.14
+./configure --enable-usb
+make
+sudo make install
+sudo nano /etc/apcupsd/apcupsd.conf
+
+sudo apt-get install git
+
+sudo apt-get update
+sudo apt-get dist-upgrade
+
+mkdir ~/git && cd ~/git
+git clone https://github.com/arobb/charlotte.git && cd charlotte
+git submodule update --init
+sudo install/install_service_ups_send.sh
+
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+sudo reboot
