@@ -6,7 +6,11 @@ Edit the `hosts` files.
 
 Deploy using ansible (install instructions for ansible are in requirements below).
 ```
-ansible-playbook -e 'host_key_checking=False' playbook.yaml -i hosts
+# For the new playbooks:
+ansible-playbook -e 'host_key_checking=False' -i hosts --ask-pass new-pi-playbook.yaml
+
+# For all other playbooks
+ansible-playbook -e 'host_key_checking=False' -i hosts playbook.yaml
 ```
 
 ## Testing against a Docker-hosted instance

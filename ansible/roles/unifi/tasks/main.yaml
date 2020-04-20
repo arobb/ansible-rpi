@@ -2,11 +2,13 @@
 # Install specific Java version (avoid accidental install of newer Java)
 - name: Recommended dependencies
   apt:
-    name: "{{ item }}"
+    pkg:
+      - ca-certificates
+      - apt-transport-https
+      - openjdk-8-jdk
     state: latest
     update_cache: yes
-  with_items:
-    ['ca-certficates', 'apt-transport-https', 'openjdk-8-jdk']
+
 
 - name: Add the Ubiquiti Apt GPG key
   apt_key:

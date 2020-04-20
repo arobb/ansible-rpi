@@ -1,4 +1,10 @@
 ---
+- name: 'Set an authorized key'
+  authorized_key:
+    user: pi
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
 - name: 'Update APT package cache'
   #action: apt update_cache=yes
   apt:

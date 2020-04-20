@@ -1,0 +1,14 @@
+- name: Install Apt Caching tool
+  apt:
+    pkg:
+      - apt-cacher-ng
+
+- name: Configure for pass through (brute force support for HTTPS)
+  patch:
+    src: apt-cacher-ng_acng.conf.patch
+    dest: /etc/apt-cacher-ng/acng.conf
+
+- name: Ensure cache service running
+  service:
+    name: apt-cacher-ng
+    status: restarted

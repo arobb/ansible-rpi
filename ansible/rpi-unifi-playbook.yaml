@@ -1,0 +1,8 @@
+---
+- name: Ansible playbook for rpi-unifi hosts
+  hosts: unifi
+  roles:
+    - pi
+    - unifi
+  remote_user: pi
+  become: yes

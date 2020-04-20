@@ -1,2 +1,8 @@
 [qa]
 raspbian ansible_port=2022 ansible_host=localhost ansible_user=root ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
+
+[new:children]
+qa
+
+# [local]
+# localhost ansible_connection=local

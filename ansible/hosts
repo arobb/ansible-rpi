@@ -13,6 +13,10 @@ rpi-admin00.local
 rpi-openvpn00.local
 
 
+[unifi]
+rpi-unifi00.local
+
+
 [dhcp]
 rpi-network[00:01].local
 
@@ -25,6 +29,10 @@ rpi-power[00:01].local
 dhcp
 admin
 openvpn
+
+
+[new]
+raspberrypi.local
 
 
 [all:vars]
