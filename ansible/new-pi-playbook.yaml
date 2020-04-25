@@ -5,6 +5,7 @@
   hosts: new
   roles:
     - pi
+    - upgrade-to-latest
     - temp
   remote_user: pi
   become: yes
