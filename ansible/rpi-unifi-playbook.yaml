@@ -2,6 +2,7 @@
 - name: Ansible playbook for rpi-unifi hosts
   hosts: unifi
   roles:
+    - apt-cacher-ng
     - pi
     - unifi
   remote_user: pi
