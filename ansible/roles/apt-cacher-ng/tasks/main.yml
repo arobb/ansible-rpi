@@ -1,14 +1,30 @@
+---
+- name: Disable Apt proxy while we download this
+  command: mv /etc/apt/apt.conf.d/proxy.conf ~/apt.proxy.conf
+  ignore_errors: yes
+
 - name: Install Apt Caching tool
   apt:
-    pkg:
-      - apt-cacher-ng
-
-- name: Configure for pass through (brute force support for HTTPS)
-  patch:
-    src: apt-cacher-ng_acng.conf.patch
-    dest: /etc/apt-cacher-ng/acng.conf
+    name: apt-cacher-ng
+    state: present
+    update_cache: yes
 
 - name: Ensure cache service running
   service:
     name: apt-cacher-ng
-    status: restarted
+    state: started
+
+- name: Configure for pass through
+  blockinfile:
+    path: /etc/apt-cacher-ng/acng.conf
+    insertafter:  '^# PassThroughPattern: \^.*'
+    block: |
+      PassThroughPattern: ^({{ allow_string }}):443$
+  notify: restart apt-cacher-ng
+
+- name: Force restart handler to run if needed
+  meta: flush_handlers
+
+- name: Restore Apt proxy
+  command: mv ~/apt.proxy.conf /etc/apt/apt.conf.d/proxy.conf
+  ignore_errors: yes
