@@ -1,9 +1,0 @@
----
-
-- name: Ansible Playbook for configuring network controller Raspberry Pi
-
-  hosts: dhcp
-  roles:
-    - 
-  remote_user: pi
-  become: yes
