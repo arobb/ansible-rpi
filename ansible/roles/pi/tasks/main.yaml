@@ -5,24 +5,8 @@
     state: present
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
-- name: 'Update APT package cache'
-  #action: apt update_cache=yes
-  apt:
-    update_cache: yes
-
-- name: 'Upgrade APT and the OS to the lastest packages'
-  apt:
-    upgrade: dist
-
-- name: 'Reboot'
-  command: sleep 2 && reboot
-  async: 1
-  poll: 0
-  ignore_errors: true
-
-- name: "Wait for Raspberry PI to come back"
-  local_action: wait_for host={{ ansible_ssh_host }} port=22 state=started delay=10
-  become: false
+- name: 'Run Apt proxy task'
+  import_tasks: apt-proxy.yaml
 
 - name: 'Run profile task'
   import_tasks: profile.yaml

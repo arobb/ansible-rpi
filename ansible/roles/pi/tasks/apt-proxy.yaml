@@ -1,0 +1,6 @@
+---
+- name: 'Copy Apt proxy script'
+  copy:
+    src: apt.proxy.conf
+    dest: /etc/apt/apt.conf.d/proxy.conf
+    mode: 0755
