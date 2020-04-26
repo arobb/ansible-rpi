@@ -1,0 +1,11 @@
+[Interface]
+Address = {{ client_address }}
+PrivateKey = {{ client_private_key }}
+DNS = {{ vpn_dns }}
+
+[Peer]
+PublicKey = {{ vpn_wireguard_public_key }}
+PresharedKey = {{ client_preshared_key }}
+AllowedIPs = 0.0.0.0/0
+Endpoint = {{ vpn_host }}:51820
+PersistentKeepalive = 25

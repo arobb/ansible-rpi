@@ -4,5 +4,5 @@ raspbian ansible_port=2022 ansible_host=localhost ansible_user=root ansible_ssh_
 [new:children]
 qa
 
-# [local]
-# localhost ansible_connection=local
+[local]
+localhost ansible_connection=local

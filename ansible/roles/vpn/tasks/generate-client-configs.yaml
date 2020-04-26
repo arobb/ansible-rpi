@@ -1,0 +1,17 @@
+---
+- name: Create client destination
+  file:
+    path: /etc/wireguard/clients
+    state: directory
+    mode: '0700'
+
+- name: Generate client configurations
+  template:
+    src: client.conf.j2
+    dest: "/etc/wireguard/clients/{{ item }}.conf"
+  vars:
+    client_address: "{{ lookup('vars', 'vpn_wireguard_' + item + '_address') }}"
+    client_private_key: "{{ lookup('vars', 'vpn_wireguard_' + item + '_private_key') }}"
+    client_preshared_key: "{{ lookup('vars', 'vpn_wireguard_' + item + '_preshared_key') }}"
+  loop: "{{ clients }}"
+  notify: Generate client QR codes

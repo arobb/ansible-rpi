@@ -1,7 +1,7 @@
 [all:children]
 dhcp
 admin
-openvpn
+vpn
 power
 
 
@@ -9,8 +9,8 @@ power
 rpi-admin00.local
 
 
-[openvpn]
-rpi-openvpn00.local
+[vpn]
+rpi-vpn00.local
 
 
 [unifi]
@@ -28,7 +28,7 @@ rpi-power[00:01].local
 [bramble:children]
 dhcp
 admin
-openvpn
+vpn
 
 
 [new]
