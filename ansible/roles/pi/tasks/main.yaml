@@ -10,3 +10,8 @@
 
 - name: 'Run profile task'
   import_tasks: profile.yaml
+
+- name: 'Install some basics'
+  apt:
+    pkg:
+      vim

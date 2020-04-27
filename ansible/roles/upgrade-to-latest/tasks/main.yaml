@@ -8,11 +8,6 @@
   apt:
     upgrade: dist
 
-- name: 'Install some basics'
-  apt:
-    pkg:
-      vim
-
 - name: 'Reboot'
   command: sleep 2 && reboot
   async: 1
