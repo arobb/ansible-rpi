@@ -14,4 +14,14 @@
 - name: 'Install some basics'
   apt:
     pkg:
-      vim
+      - vim
+      - netdata
+
+- name: 'Set netdata configuration'
+  copy:
+    src: netdata.conf
+    dest: /etc/netdata/netdata.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart netdata
