@@ -4,6 +4,7 @@
 
   hosts: new
   roles:
+    - expand-fs
     - pi
     - upgrade-to-latest
     - temp
