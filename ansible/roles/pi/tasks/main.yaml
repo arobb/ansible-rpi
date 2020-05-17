@@ -16,6 +16,7 @@
     pkg:
       - vim
       - netdata
+      - ca-certificates
 
 - name: 'Set netdata configuration'
   copy:
