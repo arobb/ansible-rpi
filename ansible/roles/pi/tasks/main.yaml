@@ -16,7 +16,13 @@
     pkg:
       - vim
       - netdata
+    update_cache: yes
+
+- name: 'Update root certificates'
+  apt:
+    pkg:
       - ca-certificates
+  notify: Rebuild Root CA Bundle
 
 - name: 'Set netdata configuration'
   copy:

@@ -3,3 +3,7 @@
   service:
     name: netdata
     state: restarted
+
+- name: Rebuild Root CA Bundle
+  command: c_rehash
+  become: yes
