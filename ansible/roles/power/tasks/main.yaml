@@ -1,20 +1,38 @@
 ---
 - name: Download APC utility
   unarchive:
-    src: http://downloads.sourceforge.net/project/apcupsd/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz
+    src: https://sourceforge.net/projects/apcupsd/files/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz/download
     remote_src: yes
     dest: /tmp
+  register: apc_download
 
 - name: Configure the APC utility
   command: ./configure --enable-usb
+  args:
     chdir: /tmp/apcupsd-3.14.14
+  when: apc_download.changed
 
 - name: Build the APC utility
   make:
     chdir: /tmp/apcupsd-3.14.14
+  when: apc_download.changed
 
-- name: Install the API utility
+- name: Install the APC API utility
   make:
     chdir: /tmp/apcupsd-3.14.14
     target: install
   become: yes
+  when: apc_download.changed
+
+- name: Configure the APC utility
+  template:
+    src: apcupsd.conf.j2
+    dest: /etc/apcupsd/apcupsd.conf
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+  notify: Restart apcupsd
+
+- name: Trigger Charlotte multicast install
+  import_tasks: install_charlotte_multicast.yml

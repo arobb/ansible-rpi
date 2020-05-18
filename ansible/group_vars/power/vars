@@ -1,0 +1,21 @@
+---
+multicast_shared_secret: "{{ vault_multicast_shared_secret }}"
+
+host_ups_map:
+  rpi-admin00:
+    name: apcmedia
+    upscable: usb
+    upstype: usb
+    device: ''
+
+  rpi-power00:
+    name: rs1000
+    upscable: usb
+    upstype: usb
+    device: ''
+
+  rpi-power01:
+    name: backhaus
+    upscable: usb
+    upstype: usb
+    device: ''

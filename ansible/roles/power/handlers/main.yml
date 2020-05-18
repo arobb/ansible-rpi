@@ -1,0 +1,20 @@
+---
+- name: Start apcupsd
+  service:
+    name: apcupsd
+    state: started
+
+- name: Restart apcupsd
+  service:
+    name: apcupsd
+    state: restarted
+
+- name: Start UPS reporting
+  service:
+    name: charlotte-ups-send
+    state: started
+
+- name: Restart UPS reporting
+  service:
+    name: charlotte-ups-send
+    state: restarted

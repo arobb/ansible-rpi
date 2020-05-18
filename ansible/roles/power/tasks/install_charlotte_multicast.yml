@@ -1,0 +1,24 @@
+---
+- name: Install Charlotte APC dependencies
+  apt:
+    pkg:
+      git
+    state: latest
+    update_cache: yes
+
+- name: Download Charlotte project
+  git: repo=https://github.com/arobb/charlotte.git dest="{{ git_path }}/charlotte"
+  register: charlotte_download
+
+- name: Install and start UPS reporting
+  shell:
+    chdir: "{{ git_path }}/charlotte"
+    cmd: 'install/install_service_ups_send.sh'
+  become: yes
+  when: charlotte_download.changed
+
+- name: Configure Charlotte
+  template:
+    src: multicast-config.ini.j2
+    dest: "{{ git_path }}/charlotte/multicast-comms/config.ini"
+  notify: Restart UPS reporting
