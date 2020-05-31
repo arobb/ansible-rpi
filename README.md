@@ -29,13 +29,23 @@ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook new-pi-playbook.yaml -i hosts-q
 ## WireGuard VPN
 Generate keys.
 
+### Basic commands
 ```
-# Generate private and public keys
-wg genkey | tee peer-a.key | wg pubkey > peer-a.pub
-wg genkey | tee peer-b.key | wg pubkey > peer-b.pub
+# Generate a private key
+wg genkey
 
-# Generate a pre-shared key
+# Extract a public key from a private key
+wg pubkey < private.key
+
+# Generate a preshared key
 wg genpsk
+```
+
+### Generate private, public, and preshared keys
+```
+touch peer-{a,b}.{key,pub,psk} && chmod 0700 peer-{a,b}.{key,pub,psk}
+wg genkey | tee peer-a.key | wg pubkey > peer-a.pub && wg genpsk > peer-a.psk
+wg genkey | tee peer-b.key | wg pubkey > peer-b.pub && wg genpsk > peer-a.psk
 ```
 
 ### Client configuration
@@ -43,3 +53,10 @@ Client configurations are available at /etc/wireguard/clients/. Download the PNG
 ```
 sudo qrencode -t ansiutf8 -r /etc/wireguard/clients/<client>.conf
 ```
+
+### Build keys into a client configuration
+1. Generate private, public, and preshared keys for a client.
+2. Edit the Vault file and create a new block of entries with the updated client name
+3. Save the Vault file and clear any files you may have made on the vpn host
+4. Edit group_vars/vpn/vars and create a new block of entries with the updated client name
+4. Edit roles/vpn/vars/main.yaml and add an entry with the client name

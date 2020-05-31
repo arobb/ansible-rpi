@@ -1,12 +1,2 @@
 ---
-# WireGuard Configuration
-vpn_host: "{{ vault_vpn_host }}"
-vpn_dns: "{{ vault_vpn_dns }}"
-vpn_wireguard_private_key: "{{ vault_vpn_wireguard_private_key }}"
-vpn_wireguard_public_key: "{{ vault_vpn_wireguard_public_key }}"
-
-# WireGuard: Vancouver
-vpn_wireguard_vancouver_preshared_key: "{{ vault_vpn_wireguard_vancouver_preshared_key }}"
-vpn_wireguard_vancouver_private_key: "{{ vault_vpn_wireguard_vancouver_private_key }}"
-vpn_wireguard_vancouver_public_key: "{{ vault_vpn_wireguard_vancouver_public_key }}"
-vpn_wireguard_vancouver_address: "{{ vault_vpn_wireguard_vancouver_address }}"
+vpn_vars: "{{ vault_vpn_vars }}"
