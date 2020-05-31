@@ -6,4 +6,4 @@
 
 - name: Generate client QR codes
   command: "qrencode -t ansiutf8 -r /etc/wireguard/clients/{{ item }}.conf -o /etc/wireguard/clients/{{ item }}.png"
-  loop: "{{ clients }}"
+  loop: "{{ lookup('dict', vpn_vars.wireguard.clients) }}"
