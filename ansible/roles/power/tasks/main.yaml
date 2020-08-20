@@ -4,22 +4,32 @@
     src: https://sourceforge.net/projects/apcupsd/files/apcupsd%20-%20Stable/3.14.14/apcupsd-3.14.14.tar.gz/download
     remote_src: yes
     dest: /tmp
+    group: pi
+    owner: pi
+
+- name: Copy reference download to build
+  synchronize:
+    src: /tmp/apcupsd-3.14.14/
+    dest: /tmp/apcupsd
+    group: yes
+    owner: yes
+  delegate_to: "{{ inventory_hostname }}"
   register: apc_download
 
-- name: Configure the APC utility
+- name: Configure the APC utility build
   command: ./configure --enable-usb
   args:
-    chdir: /tmp/apcupsd-3.14.14
+    chdir: /tmp/apcupsd
   when: apc_download.changed
 
 - name: Build the APC utility
   make:
-    chdir: /tmp/apcupsd-3.14.14
+    chdir: /tmp/apcupsd
   when: apc_download.changed
 
 - name: Install the APC API utility
   make:
-    chdir: /tmp/apcupsd-3.14.14
+    chdir: /tmp/apcupsd
     target: install
   become: yes
   when: apc_download.changed
@@ -33,6 +43,23 @@
     group: root
   become: yes
   notify: Restart apcupsd
+
+- name: Remove default APC utility init script
+  file:
+    path: /etc/init.d/apcupsd
+    state: absent
+
+- name: Add the APC utility systemd script
+  template:
+    src: apcupsd.systemd.j2
+    dest: /etc/systemd/system/apcupsd.service
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+  notify:
+    - Enable apcupsd
+    - Restart apcupsd
 
 - name: Trigger Charlotte multicast install
   import_tasks: install_charlotte_multicast.yml

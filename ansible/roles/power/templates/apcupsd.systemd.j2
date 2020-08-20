@@ -1,0 +1,13 @@
+[Unit]
+Description=APC UPS Daemon
+After=syslog.target network.target remote-fs.target
+AssertPathExists=/var/lock
+
+[Service]
+Type=exec
+ExecStartPre=rm -f /etc/apcupsd/powerfail
+ExecStart=/sbin/apcupsd -P /var/run/apcupsd.pid
+PIDFile=/var/run/apcupsd.pid
+
+[Install]
+WantedBy=multi-user.target

@@ -15,7 +15,6 @@
     chdir: "{{ git_path }}/charlotte"
     cmd: 'install/install_service_ups_send.sh'
   become: yes
-  when: charlotte_download.changed
 
 - name: Configure Charlotte
   template:

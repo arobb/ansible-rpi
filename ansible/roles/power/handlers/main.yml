@@ -9,6 +9,11 @@
     name: apcupsd
     state: restarted
 
+- name: Enable apcupsd
+  service:
+    name: apcupsd
+    enabled: yes
+
 - name: Start UPS reporting
   service:
     name: charlotte-ups-send
