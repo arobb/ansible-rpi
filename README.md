@@ -26,6 +26,11 @@ Follow README directions for "Generic access to Raspbian environment"
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook new-pi-playbook.yaml -i hosts-qa
 ```
 
+## Ad-hoc commands
+```
+ansible all -a "cat /proc/cpuinfo" [-u username] [--become] [--ask-become-pass]
+```
+
 ## WireGuard VPN
 Generate keys.
 
