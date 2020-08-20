@@ -22,7 +22,10 @@
   apt:
     pkg:
       - ca-certificates
-  notify: Rebuild Root CA Bundle
+
+- name: Rebuild Root CA Bundle
+  command: c_rehash
+  become: yes
 
 - name: 'Set netdata configuration'
   copy:
