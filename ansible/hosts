@@ -18,11 +18,12 @@ rpi-unifi00.local
 
 
 [dhcp]
-rpi-network[00:01].local
+#rpi-network[00:01].local
 
 
 [power]
 rpi-power[00:01].local
+# rpi-admin00.local
 
 
 [bramble:children]
@@ -33,7 +34,6 @@ vpn
 
 [new]
 raspberrypi.local
-
 
 [all:vars]
 ansible_user=pi
