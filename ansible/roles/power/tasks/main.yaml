@@ -63,3 +63,12 @@
 
 - name: Trigger Charlotte multicast install
   import_tasks: install_charlotte_multicast.yml
+
+- name: Verify services are running
+  service:
+    name: "{{ item }}"
+    state: restarted
+  become: true
+  loop:
+    - apcupsd
+    - charlotte-ups-send
