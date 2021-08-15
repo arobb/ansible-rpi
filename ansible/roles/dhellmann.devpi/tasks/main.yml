@@ -1,0 +1,63 @@
+---
+- name: Install apt dependencies
+  apt:
+    name: ['python3-setuptools', 'python3-pip', 'supervisor']
+    state: present
+
+- name: Install global Python dependencies
+  pip:
+    name: ['virtualenv']
+    state: present
+
+- name: Make virtualenv directory
+  file:
+    path: "{{devpi_virtualenv}}"
+    state: directory
+
+- name: Create devpi virtualenv
+  command: virtualenv "{{devpi_virtualenv}}"
+           creates={{devpi_virtualenv}}
+
+- name: Install packages
+  pip:
+    name: ['devpi', 'wheel']
+    virtualenv: "{{devpi_virtualenv}}"
+    state: present
+
+- name: Directory for devpi config file
+  file:
+    path: "{{ansible_env.HOME}}/.config/devpi-server"
+    state: directory
+
+- name: Install devpi config file
+  template:
+    src: devpi-server.yml
+    dest: "{{ansible_env.HOME}}/.config/devpi-server/devpi-server.yml"
+
+- name: Check for devpi content
+  stat: path="{{ansible_env.HOME}}/.devpi/server/.nodeinfo"
+  register: content
+
+- name: Initialize devpi
+  command: "{{devpi_virtualenv}}/bin/devpi-init"
+  when: not content.stat.exists
+
+- name: Make sure supervisord is running
+  service: name=supervisor state=started enabled=yes
+  become: yes
+
+- name: Configure supervisord to run devpi
+  become: yes
+  template:
+    src: supervisor-devpi.conf
+    dest: /etc/supervisor/conf.d/supervisor-devpi.conf
+  notify:
+    - restart supervisord
+
+- name: Create ~/.pip/wheelhouse
+  file: path={{devpi_wheelhouse}}
+        state=directory
+
+- name: ~/.pip.conf
+  template: src=pip.conf
+            dest={{ansible_env.HOME}}/.pip/pip.conf

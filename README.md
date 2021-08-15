@@ -4,13 +4,18 @@ Based on https://github.com/motdotla/ansible-pi
 Basic configuration https://gist.github.com/arobb/f572fdd8946df2f037e9b8e515698fb7
 Edit the `hosts` files.
 
-Deploy using ansible (install instructions for ansible are in requirements below).
+Deploy using Ansible (install instructions for Ansible are in requirements below).
 ```
 # For the new playbooks:
 ansible-playbook -e 'host_key_checking=False' -i hosts --ask-pass new-pi-playbook.yaml
 
 # For all other playbooks
 ansible-playbook -e 'host_key_checking=False' -i hosts playbook.yaml
+```
+
+## Install Ansible Galaxy dependencies
+```
+ansible-galaxy install -r requirements.yml
 ```
 
 ## Editing the Vault
@@ -65,3 +70,11 @@ sudo qrencode -t ansiutf8 -r /etc/wireguard/clients/<client>.conf
 3. Save the Vault file and clear any files you may have made on the vpn host
 4. Edit group_vars/vpn/vars and create a new block of entries with the updated client name
 4. Edit roles/vpn/vars/main.yaml and add an entry with the client name
+
+# DevPi
+Cache for PyPi.
+```
+# On a user system
+# https://stackoverflow.com/a/16471361
+PIP_INDEX_URL=http://<system address>:3141/root/pypi/+simple/
+```

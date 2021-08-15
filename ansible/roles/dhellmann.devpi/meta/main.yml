@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: "Doug Hellmann"
+  description: "Deploys a devpi server for caching downloads from the Python Package Index."
+  license: BSD
+  min_ansible_version: 1.8.2
+  platforms:
+    - name: GenericUNIX
+      versions:
+        - all
+        - any
+  categories:
+    - development
+dependencies: []
+  
