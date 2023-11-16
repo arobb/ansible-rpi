@@ -4,6 +4,7 @@ allow_list:
   - changelogs.ubuntu.com
   - download.docker.com
   - www.ui.com
+  - dl.ui.com
   - dl.ubnt.com
 
 allow_list_escaped: "{{ allow_list | replace('.', '\\.') }}"
