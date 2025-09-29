@@ -2,6 +2,7 @@
 - name: Ansible playbook for rpi-vpn
   hosts: vpn
   roles:
+    - upgrade-to-latest
     - pi
     - vpn
   remote_user: pi
