@@ -1,15 +1,6 @@
 ---
 # https://engineerworkshop.com/2020/02/20/how-to-set-up-wireguard-on-a-raspberry-pi/
 # https://wiki.archlinux.org/index.php/WireGuard#Key_generation
-- name: Add the first Debian key
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 04EE7237B7D453EC
-
-- name: Add the second Debian key
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 648ACFD622F3D138
 
 - name: Limit use of the unstable branch
   copy:
@@ -17,10 +8,12 @@
     dest: /etc/apt/preferences.d/limit-unstable
     mode: 0755
 
-- name: Add the Debian Unstable Apt Repo
-  apt_repository:
-    repo: deb http://deb.debian.org/debian/ unstable main
+- name: Install IPTables for Wireguard
+  apt:
+    pkg:
+      - iptables
     state: present
+    update_cache: yes
 
 - name: Install WireGuard and QR Encode
   apt:
