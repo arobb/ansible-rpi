@@ -18,9 +18,14 @@ ansible-playbook -e 'host_key_checking=False' -i hosts playbook.yaml
 ansible-galaxy install -r requirements.yml
 ```
 
+## Create a vault
+```
+ansible-vault create vault --vault-password-file ../macos_vault_password_lookup
+```
+
 ## Editing the Vault
 ```
-ansible-vault edit group_vars/vpn/vault
+ansible-vault edit group_vars/vpn/vault --vault-password-file ../macos_vault_password_lookup
 ```
 
 ## Testing against a Docker-hosted instance
