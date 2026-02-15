@@ -1,17 +1,17 @@
 [Interface]
 Address = 172.30.30.1/24
 ListenPort = 51820
-PrivateKey = {{ vpn_vars.wireguard.private_key }}
+PrivateKey = {{ vault_wg_hosts.private_key }}
 
 # https://github.com/pirate/wireguard-docs/blob/master/example-simple-client-to-server/server/setup.sh
 PostUp = iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT; iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT; iptables -A FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT; iptables -t nat -A POSTROUTING -s 172.30.30.0/24 -o eth0 -j MASQUERADE
 PostDown = iptables -D INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT; iptables -D FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT; iptables -D FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT; iptables -t nat -D POSTROUTING -s 172.30.30.0/24 -o eth0 -j MASQUERADE
 
-{% for client, details in vpn_vars.wireguard.clients.iteritems() %}
+{% for client in vault_wg_clients %}
 [Peer]
-# {{ client }}
-PublicKey = {{ details.public_key }}
-PresharedKey = {{ details.preshared_key }}
-AllowedIPs = {{ details.address }}
+# {{ client.name }}
+PublicKey = {{ client.public_key }}
+PresharedKey = {{ client.preshared_key }}
+AllowedIPs = {{ client.host_ips[inventory_hostname] }}
 
 {% endfor %}

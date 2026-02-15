@@ -3,3 +3,7 @@
   service:
     name: netdata
     state: restarted
+
+- name: Update CA Store
+  command: update-ca-certificates --fresh
+  become: yes

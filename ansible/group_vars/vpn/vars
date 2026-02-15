@@ -1,2 +1,2 @@
 ---
-vpn_vars: "{{ vault_vpn_vars }}"
+# vpn_vars: "{{ vault_vpn_vars }}"

@@ -10,7 +10,8 @@ rpi-admin00.local
 
 
 [vpn]
-rpi-vpn00.local
+rpi-vpn00.local ansible_host=192.168.11.13
+rpi-vpn01.local ansible_host=192.168.12.13
 
 
 [unifi]
@@ -22,7 +23,8 @@ rpi-unifi00.local
 
 
 [power]
-rpi-power[00:01].local
+# rpi-power00.local
+rpi-power01.local
 # rpi-admin00.local
 
 

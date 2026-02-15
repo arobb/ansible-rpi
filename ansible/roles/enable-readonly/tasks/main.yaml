@@ -1,0 +1,28 @@
+---
+# Enable read only boot partition and an overlay filesystem
+
+# Force all other handlers to run before we re-enable the read-only configuration
+- name: Force all disk writes now
+  meta: flush_handlers
+
+# Set the overlay and boot read-only settings
+
+- name: Maintenance - Activate Overlay if inactive
+  block:
+    - name: Check if OverlayFS is currently mounted
+      # 'grep -q' returns 0 if found, 1 if not.
+      # We check the actual live mount status.
+      shell: "awk '$2 == \"/\" {print $3}' /proc/mounts | grep -q 'overlay'"
+      register: overlay_status
+      failed_when: false
+      changed_when: false
+
+
+    - name: Perform Enable and Reboot
+      block:
+        - name: Re-enable Read-Only protection
+          shell: raspi-config nonint enable_overlayfs && raspi-config nonint enable_bootro
+          notify: Reboot and Wait
+
+      # This inner block only runs if the first check found an active overlay
+      when: overlay_status.rc == 1

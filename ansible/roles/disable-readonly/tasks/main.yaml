@@ -1,0 +1,35 @@
+---
+# Disable a readonly Raspbian file system
+- name: Maintenance - Break out of Overlay if active
+  block:
+    - name: Check if OverlayFS is currently mounted
+      # 'grep -q' returns 0 if found, 1 if not.
+      # We check the actual live mount status.
+      shell: "awk '$2 == \"/\" {print $3}' /proc/mounts | grep -q 'overlay'"
+      register: overlay_status
+      failed_when: false
+      changed_when: false
+
+    - name: Perform Disable and Reboot
+      block:
+        - name: Determine boot path
+          set_fact:
+            boot_path: "{{ '/boot/firmware' if ansible_distribution_major_version | int >= 12 else '/boot' }}"
+          changed_when: false
+
+        - name: Force remount boot as Read-Write
+          command: "mount -o remount,rw {{ boot_path }}"
+          changed_when: false
+
+        - name: Disable Overlay via raspi-config
+          shell: raspi-config nonint disable_overlayfs
+          changed_when: false
+
+        - name: Reboot to apply Read-Write mode
+          reboot:
+          # We leave this as a 'change' usually,
+          # but you can add changed_when: false if you want total silence.
+          changed_when: false
+
+      # This inner block only runs if the first check found an active overlay
+      when: overlay_status.rc == 0

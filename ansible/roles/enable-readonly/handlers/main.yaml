@@ -1,0 +1,6 @@
+---
+- name: Reboot and Wait
+  reboot:
+    msg: "Rebooting to apply File System changes"
+    reboot_timeout: 180
+  changed_when: false

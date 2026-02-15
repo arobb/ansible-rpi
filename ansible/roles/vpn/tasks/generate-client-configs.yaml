@@ -8,14 +8,15 @@
 - name: Generate client configurations
   template:
     src: client.conf.j2
-    dest: "/etc/wireguard/clients/{{ item.key }}.conf"
+    dest: "/etc/wireguard/clients/{{ item.name }}.conf"
   vars:
-    vpn_host: "{{ vpn_vars.host }}"
-    vpn_dns: "{{ vpn_vars.dns }}"
-    public_key: "{{ vpn_vars.wireguard.public_key }}"
-    client_address: "{{ item.value.address }}"
-    client_private_key: "{{ item.value.private_key }}"
-    client_preshared_key: "{{ item.value.preshared_key }}"
+    vpn_host: "{{ vault_wg_hosts[inventory_hostname].host }}"
+    vpn_dns: "{{ vault_wg_hosts[inventory_hostname].dns }}"
+    public_key: "{{ vault_wg_hosts.public_key }}"
+    client_address: "{{ item.host_ips[inventory_hostname] }}"
+    client_private_key: "{{ item.private_key }}"
+    client_preshared_key: "{{ item.preshared_key }}"
+  no_log: true
 
-  loop: "{{ lookup('dict', vpn_vars.wireguard.clients) }}"
+  loop: "{{ lookup('list', vault_wg_clients) }}"
   notify: Generate client QR codes

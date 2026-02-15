@@ -15,23 +15,10 @@
   apt:
     pkg:
       - vim
-      - netdata
     update_cache: yes
 
 - name: 'Update root certificates'
   apt:
-    pkg:
-      - ca-certificates
-
-- name: Rebuild Root CA Bundle
-  command: c_rehash
-  become: yes
-
-- name: 'Set netdata configuration'
-  copy:
-    src: netdata.conf
-    dest: /etc/netdata/netdata.conf
-    mode: 0644
-    owner: root
-    group: root
-  notify: Restart netdata
+    name: ca-certificates
+    state: latest
+  notify: Update CA Store

@@ -2,8 +2,10 @@
 - name: Ansible playbook for rpi-vpn
   hosts: vpn
   roles:
+    - disable-readonly
     - upgrade-to-latest
     - pi
     - vpn
+    - enable-readonly
   remote_user: pi
   become: yes
